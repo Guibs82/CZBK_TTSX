@@ -12,6 +12,11 @@ class UserInfo(models.Model):
         """通过元类定义表名"""
         db_table = "UserInfo"
 
+    @classmethod
+    def create(cls, uName, uPwd, uEmail):
+        user = cls(uname=uName, upwd=uPwd, uemail=uEmail)
+        user.isDeleted = False
+        return user
 
 
 class DeliveryAddress(models.Model):
