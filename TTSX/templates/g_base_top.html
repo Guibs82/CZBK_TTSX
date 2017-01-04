@@ -3,8 +3,8 @@
     二级基模板:
         顶部登陆什么的
 {% endcomment %}
-<body>
-    {#此处开始为顶部注册登陆什么的#}
+{% block body_without_footer %}
+        {#此处开始为顶部注册登陆什么的#}
 	<div class="header_con">
 		<div class="header">
 			<div class="welcome fl">欢迎来到天天生鲜!</div>
@@ -29,6 +29,5 @@
 		</div>
 	</div>
     {#此处为顶部注册登陆什么的结束#}
-
-</body>
+{% endblock body_without_footer %}
 </html>
