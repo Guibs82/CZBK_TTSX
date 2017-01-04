@@ -14,6 +14,7 @@ class GoodsInfo(models.Model):
     """商品信息"""
     gTitle = models.CharField(max_length=20, db_column='gtitle')
     gType = models.ForeignKey('TypeInfo', db_column='gtype')
+    gImage = models.CharField(max_length=100, db_column='gimage')
     gPrice = models.DecimalField(10, 2, db_column='gprice')
     gDesc = models.TextField(max_length=500, db_column='gdesc')
     isDeleted = models.BooleanField(default=False)

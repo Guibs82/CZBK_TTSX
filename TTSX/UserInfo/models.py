@@ -11,3 +11,13 @@ class UserInfo(models.Model):
     class Meta():
         """通过元类定义表名"""
         db_table = "UserInfo"
+
+class DeliveryAddress(models.Model):
+    """收货信息"""
+    daName = models.CharField(max_length=20, db_column='name')
+    daPhone = models.CharField(max_length=11, db_column='phone')
+    daAddress = models.CharField(max_length=50, db_column='address')
+    daPostCode = models.CharField(max_length=6, db_column='postcode')
+    class Meta():
+        """通过元类定义表名"""
+        db_table = "DeliveryAddress"
