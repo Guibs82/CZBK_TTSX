@@ -12,6 +12,8 @@ class UserInfo(models.Model):
         """通过元类定义表名"""
         db_table = "UserInfo"
 
+
+
 class DeliveryAddress(models.Model):
     """收货信息"""
     daName = models.CharField(max_length=20, db_column='name')
