@@ -1,0 +1,244 @@
+{% extends 'g_base_top_rightsearch.html' %}
+{% comment %}
+    购物车页面
+        goodsCount --> 全部商品样数(购物车信息条数)
+{% endcomment %}
+
+{% block header %}
+    <title>天天生鲜-购物车</title>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+        function updateCartGoodCount(obj, count) {
+            {# 更新购物车表中该商品的数量 #}
+            // To-Do
+        }
+        function updateGoodTotalPrice(obj, count) {
+            {# 根据数量更新当前物品总价格 #}
+            //alert(obj.parent().parent().prev().attr('class'));
+            var gPrice = parseFloat(obj.parent().parent().prev().html()); // 单价
+            var totalPrice = gPrice * count; // 总价
+            totalPrice = totalPrice.toFixed(2) + '元';
+            obj.parent().parent().next().html(totalPrice); // 更新页面中该商品条目的总价格
+        }
+
+        function updateGoodsTotalCountAndPrice() {
+            {# 更新所有选中商品的总计数量和金额 #}
+            // 取出所有选中的行
+            checkboxList = $('.cart_list_td input[type="checkbox"]');
+            checkedList = checkboxList.filter(function () {
+                return $(this).prop('checked') == true;
+            });
+
+            // 遍历选中的checkbox
+            // To-Do:
+            //  选中的总数和总金额
+
+            var totalCount = parseInt(0); // 商品总数
+            var totalPrice = parseFloat(0); // 商品总价格
+            $(checkedList).each(function () {
+                var count = parseInt($(this).parent().next().next().next().next().next().find('input').val()); // 该商品数量
+                // var price = parseFloat($(this).parent().next().next().next().next().html()); // 该商品单价
+                totalCount += count;
+                var goodsPrice = $(this).parent().next().next().next().next().next().next().html();
+                totalPrice = parseFloat(totalPrice) + parseFloat(goodsPrice);
+            });
+            $('.settlements .col03 b').html(totalCount);
+            $('.settlements .col03 em').html(totalPrice.toFixed(1));
+        }
+    </script>
+    <script>
+        $(function () {
+
+            {# 页面加载后, 根据数量, 更新价格信息 #}
+            $('.num_show').each(function () {
+                var count = $(this).val();
+                updateGoodTotalPrice($(this), count);
+            });
+            updateGoodsTotalCountAndPrice();
+
+            {# 数量更改后, 更改总价格 #}
+
+                {# 点击+ 增加商品数量 #}
+                $('.add').click(function () {
+                    var count = $(this).next().val();
+                    count = parseInt(count) + 1;
+                    $(this).next().val(count);
+                    {# 更新购物车数据库中该商品的数量 #}
+                    updateCartGoodCount($(this), count);
+                    {# 更新本商品信息总价格 #}
+                    updateGoodTotalPrice($(this), count);
+                });
+
+                {# 直接修改数量 #}
+                // To-Do
+                // 直接修改数量时候---未完成
+                $('.num_show').blur(function () {
+                    var count = $(this).val();
+                    if (parseInt(count)>0){
+                        $(this).val(count);
+                        {# 更新购物车数据库中该商品的数量 #}
+                        updateCartGoodCount($(this), count);
+                        {# 更新本商品信息总价格 #}
+                        updateGoodTotalPrice($(this), count);
+                    } else {
+                        $(this).val(1);
+                    }
+                });
+
+                {# 点击- 减少商品数量 #}
+                $('.minus').click(function () {
+                    var count = $(this).prev().val();
+                    if (count>1) {
+                        count = parseInt(count) - 1;
+                        $(this).prev().val(count);
+                        {# 更新购物车数据库中该商品的数量 #}
+                        updateCartGoodCount($(this), count);
+                        {# 更新本商品信息总价格 #}
+                        updateGoodTotalPrice($(this), count);
+                    }
+                });
+
+                {# 当修改商品数量|修改选中状态|删除购物车 重新计算全部商品数量及价格 #}
+                $('.add').click(function () {
+                    updateGoodsTotalCountAndPrice()
+                });
+                $('.minus').click(function () {
+                    updateGoodsTotalCountAndPrice()
+                });
+                $('input[type="checkbox"]').click(function () {
+                    updateGoodsTotalCountAndPrice()
+                });
+                $('.col08 a').click(function () {
+                    updateGoodsTotalCountAndPrice()
+                });
+                $('.num_show').blur(function () {
+                    updateGoodsTotalCountAndPrice()
+                })
+        });
+    </script>
+{% endblock header %}
+
+{% block right_search_page_center %}
+    {# 商品数量 goodsCount 开始 #}
+    <div class="total_count">全部商品<em>{{ goodsCount }}</em>件</div>
+    {# 商品数量 结束 #}
+
+    {# 表头 开始 #}
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+    {# 表头 结束 #}
+
+    {# 商品列表 开始 #}
+    {% for cartInfo in cartInfoes %}
+        {# 遍历取出购物车信息集合中的每个购物车信息生成表格的一行 开始 #}
+        <ul class="cart_list_td clearfix" name="{{ cartInfo.pk }}">
+            {# 填写本条购物车信息中的商品信息 开始 #}
+                {# 勾选框 开始 #}
+		        <li class="col01"><input type="checkbox" name="{{ cartInfo.pk }}" checked></li>
+                {# 勾选框 结束 #}
+
+                {# 商品图片 开始 #}
+		        <li class="col02"><img src="{{ cartInfo.cGoods.gImage }}"></li>
+                {# 商品图片 结束 #}
+
+                {# 商品名称 开始 #}
+	    	    <li class="col03">{{ cartInfo.cGoods.gTitle }}</li>
+                {# 商品名称 结束 #}
+
+                {# 商品单位 开始 #}
+	    	    <li class="col04">500g</li>
+                {# 商品单位 结束 #}
+
+                {# 商品价格 开始 #}
+	    	    <li class="col05">{{ cartInfo.cGoods.gPrice }}元</li>
+                {# 商品价格 结束 #}
+
+                {# 购买数量 开始 #}
+		        <li class="col06">
+		        	<div class="num_add">
+			        	<a href="javascript:;" class="add fl">+</a>
+				        <input type="text" class="num_show fl" value="{{ cartInfo.cCount }}">
+    				    <a href="javascript:;" class="minus fl">-</a>
+	    		    </div>
+		        </li>
+                {# 购买数量 结束 #}
+
+                {# 商品总价 开始 #}
+		        <li class="col07">25.80元</li>
+                {# 商品总价 结束 #}
+
+                {# 删除商品 开始 #}
+	    	    <li class="col08"><a href="javascript:;">删除</a></li>
+                {# 删除商品 结束 #}
+            {# 填写本条购物车信息中的商品信息 结束 #}
+	    </ul>
+        {# 遍历取出购物车信息集合中的每个购物车信息生成表格的一行 结束 #}
+    {% endfor %}
+    {# 商品列表 结束 #}
+
+    {# Test #}
+    <ul class="cart_list_td clearfix">
+		<li class="col01"><input type="checkbox" name="1" checked></li>
+		<li class="col02"><img src="/static/images/goods/goods012.jpg"></li>
+		<li class="col03">奇异果1<br><em>15.80元/500g</em></li>
+		<li class="col04">500g</li>
+		<li class="col05">15.80元</li>
+		<li class="col06">
+			<div class="num_add">
+				<a href="javascript:;" class="add fl">+</a>
+				<input type="text" class="num_show fl" value="1">
+				<a href="javascript:;" class="minus fl">-</a>
+			</div>
+		</li>
+		<li class="col07">0元</li>
+		<li class="col08"><a href="javascript:;">删除</a></li>
+	</ul>
+    <ul class="cart_list_td clearfix">
+		<li class="col01"><input type="checkbox" name="2"></li>
+		<li class="col02"><img src="/static/images/goods/goods012.jpg"></li>
+		<li class="col03">奇异果2<br><em>25.80元/500g</em></li>
+		<li class="col04">500g</li>
+		<li class="col05">25.80元</li>
+		<li class="col06">
+			<div class="num_add">
+				<a href="javascript:;" class="add fl">+</a>
+				<input type="text" class="num_show fl" value="2">
+				<a href="javascript:;" class="minus fl">-</a>
+			</div>
+		</li>
+		<li class="col07">0元</li>
+		<li class="col08"><a href="javascript:;">删除</a></li>
+	</ul>
+    <ul class="cart_list_td clearfix">
+		<li class="col01"><input type="checkbox" name="3" checked></li>
+		<li class="col02"><img src="/static/images/goods/goods012.jpg"></li>
+		<li class="col03">奇异果3<br><em>35.80元/500g</em></li>
+		<li class="col04">500g</li>
+		<li class="col05">35.80元</li>
+		<li class="col06">
+			<div class="num_add">
+				<a href="javascript:;" class="add fl">+</a>
+				<input type="text" class="num_show fl" value="10">
+				<a href="javascript:;" class="minus fl">-</a>
+			</div>
+		</li>
+		<li class="col07">0元</li>
+		<li class="col08"><a href="javascript:;">删除</a></li>
+	</ul>
+    {# Test #}
+
+    {# 购买总计 开始 #}
+	<ul class="settlements">
+		<li class="col01"><input type="checkbox" name="" checked></li>
+		<li class="col02">全选</li>
+		<li class="col03">合计(不含运费)：<span>¥</span><em>0.0</em><br>共计<b>0</b>件商品</li>
+		<li class="col04"><a href="place_order.html">去结算</a></li>
+	</ul>
+    {# 购买总计 结束 #}
+{% endblock right_search_page_center %}

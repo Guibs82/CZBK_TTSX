@@ -1,4 +1,5 @@
 $(function(){
+	$('#submit_btn').attr('disabled', 'true');
 
 	var error_name = false;
 	var error_password = false;
@@ -8,19 +9,40 @@ $(function(){
 
 
 	$('#user_name').blur(function() {
+
+		var name2use = $('#user_name').val();
+		$.post(
+			'/userInfo/userExisted/',
+			{
+				'name':name2use,
+			},
+			function (list) {
+				if(list.checkResult == '1') {
+					$('#user_name').next().html('用户名已存在');
+					$('#user_name').next().show();
+					error_name = true;
+				}
+			}
+		);
+
 		check_user_name();
+		checkError();
 	});
 
 	$('#pwd').blur(function() {
+		check_cpwd();
 		check_pwd();
+		checkError();
 	});
 
 	$('#cpwd').blur(function() {
 		check_cpwd();
+		checkError();
 	});
 
 	$('#email').blur(function() {
 		check_email();
+		checkError();
 	});
 
 	$('#allow').click(function() {
@@ -35,6 +57,7 @@ $(function(){
 			$(this).siblings('span').html('请勾选同意');
 			$(this).siblings('span').show();
 		}
+		checkError();
 	});
 
 
@@ -99,10 +122,19 @@ $(function(){
 		{
 			$('#email').next().html('你输入的邮箱格式不正确')
 			$('#email').next().show();
-			error_check_password = true;
+			error_email = true;
 		}
 
 	}
+
+
+	// 各个input 失去焦点时 检测error 判定按钮可用
+	function checkError() {
+		$('#submit_btn').removeAttr('disabled');
+		if (error_name|error_password|error_check_password|error_email|error_check) {
+			$('#submit_btn').attr('disabled','true');
+		}
+    }
 
 
 	$('#reg_form').submit(function() {
@@ -110,6 +142,7 @@ $(function(){
 		check_pwd();
 		check_cpwd();
 		check_email();
+		checkError();
 
 		if(error_name == false && error_password == false && error_check_password == false && error_email == false && error_check == false)
 		{

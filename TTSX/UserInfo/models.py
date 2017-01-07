@@ -5,7 +5,7 @@ from django.db import models
 class UserInfo(models.Model):
     """用户信息"""
     uName = models.CharField(max_length=20, db_column='uname', unique=True)
-    uPwd = models.CharField(max_length=20, db_column='upwd')
+    uPwd = models.CharField(max_length=40, db_column='upwd')
     uEmail = models.CharField(max_length=30, db_column='uemail')
     isDeleted = models.BooleanField(default=False)
 
