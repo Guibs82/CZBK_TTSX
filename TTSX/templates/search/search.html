@@ -1,0 +1,114 @@
+{% extends 'g_base_top_centersearch.html' %}
+{% comment %}
+    三级模板:
+        左侧logo
+        中间search
+        右边购物车
+{% endcomment %}
+
+
+{% block content_without_lsc %}
+    {# 此处填写具体功能的页面 #}
+
+
+
+
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>
+				<span></span>
+				<ul class="subnav">
+					<li><a href="/goodsInfo/#model01" class="fruit">新鲜水果</a></li>
+					<li><a href="/goodsInfo/#model02" class="seafood">海鲜水产</a></li>
+					<li><a href="/goodsInfo/#model03" class="meet">猪牛羊肉</a></li>
+					<li><a href="/goodsInfo/#model04" class="egg">禽类蛋品</a></li>
+					<li><a href="/goodsInfo/#model05" class="vegetables">新鲜蔬菜</a></li>
+					<li><a href="/goodsInfo/#model06" class="ice">速冻食品</a></li>
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="/goodsInfo/">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">手机生鲜</a></li>
+				<li class="interval">|</li>
+				<li><a href="">抽奖</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		<a href="/goodsInfo/">全部分类</a>
+		<span>></span>
+		<a href="#">新鲜水果</a>
+	</div>
+
+	<div class="main_wrap clearfix">
+    <div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>新品推荐</h3>
+				<ul>
+					<li>
+						<a href="#"><img src="/static/images/goods/goods001.jpg"></a>
+						<h4><a href="#">进口柠檬</a></h4>
+						<div class="prize">￥3.90</div>
+					</li>
+					<li>
+						<a href="#"><img src="/static/images/goods/goods002.jpg"></a>
+						<h4><a href="#">玫瑰香葡萄</a></h4>
+						<div class="prize">￥16.80</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="r_wrap fr clearfix">
+
+			<ul class="goods_type_list clearfix">
+
+                    {% if query %}
+
+                <h1>搜索结果如下：</h1>
+                    {% for result in page.object_list %}
+				<li>
+					<a href="/goodsInfo/detail/?id={{ result.object.id }}"><img src={{ result.object.gImage }}></a>
+					<h4><a href="#">{{ result.object.gTitle }}</a></h4>
+					<div class="operate">
+						<span class="prize pp" >{{ result.object.gPrice }}</span>
+						<span class="unit">{{ result.object.gPrice }}/500g</span>
+						<a href="javascript:;" class="add_goods" title="加入购物车" id = "add_cart"></a>
+					</div>
+				</li>
+
+                {% empty %}
+            <h3>啥也没找到</h3>
+                {% endfor %}
+                {% endif %}
+			</ul>
+
+            	<div class="pagenation">
+                <a href="#">首页</a>
+				<a href="#">上一页</a>
+                <a href="#" class="active">1</a>
+                <a href="#">下一页</a>
+                <a href="#">末页</a>
+			</div>
+
+
+
+
+		</div>
+	</div>
+
+
+    <script src="/static/js/jquery-1.12.4.min.js"></script>
+ {% endblock content_without_lsc %}
+
+
+
+
+
+
+
+
+
+

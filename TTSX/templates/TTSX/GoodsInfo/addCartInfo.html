@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $('#test').click(function () {
+            $.post(
+			    '/cartInfo/addCartInfo/',
+			    {
+			        'good_pk': good_pk, // 商品主键
+				    'user_pk': user_pk, // 用户主键
+                    'count': good_count, // 商品数量
+			    },
+			    function (list) {
+                    if (list.addResult == '1'){
+                        // 添加成功后的页面操作
+                    }
+			    }
+		    );
+        })
+        })
+    </script>
+</head>
+<body>
+    <a id="test" href="#">新增</a>
+    <div id="user_pk">{{ user_pk }}</div>
+</body>
+</html>
