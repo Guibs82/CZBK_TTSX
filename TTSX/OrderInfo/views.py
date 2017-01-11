@@ -47,9 +47,19 @@ def jax(request,num=1):
 	return JsonResponse({'mylist':mylist})
 
 def buy(request,pd):
+	print pd
 	Order = OrderInfo.objects.filter(id = pd)
+	print Order
+	user_pk = getUserPk(request)
+	print user_pk
 	#用户的id是用户地址的外键，从而得到此用户的所有的地址
-	address = DeliveryAddress.objects.filter(daOwner=int(1))
+	try:
+		address = DeliveryAddress.objects.filter(daOwner=user_pk)
+		print address
+		if len(address) ==0:
+			return redirect('/orderInfo/address/')
+	except Exception as e:
+		print e.message
 	#大订单的id是所有商品订单的外键，从而得到此订单下的所有商品对象
 	goods_data = OrderDetailInfo.objects.filter(oiOrder=int(pd))
 	num1 = len(goods_data)
@@ -81,7 +91,12 @@ def from_goods(request):
 	og=OrderDetailInfo.objects.create(oiOrder=od,oiGoods=goods1,oiCount=int(c1),oiPrice=float(p1))
 	og.save()
 	#添加收货地址
-	address = DeliveryAddress.objects.filter(daOwner=u1)
+	try:
+		address = DeliveryAddress.objects.filter(daOwner=u1)
+		if len(address)==0:
+			return redirect('/orderInfo/address/')
+	except Exception as e:
+		print e.message
 	mylist=[(numstr,og)]
 	context = {'key':mylist,'address':address[0],'Order':od,'num1':1,'d':od.id}
 	return render(request,'TTSX/OrderInfo/buy.html',context)
@@ -89,9 +104,15 @@ def from_goods(request):
 
 def from_chart(request):
 	print 'from_chart'
-	t1 = request.GET.getlist('t1')
-	p1 = request.GET.getlist('p1')
-	c1 = request.GET.getlist('c1')
+	try:
+		t1 = request.GET.getlist('t1')
+		if t1 ==[]:
+			return redirect('/goodsInfo/')
+		p1 = request.GET.getlist('p1')
+		c1 = request.GET.getlist('c1')
+	except Exception as e:
+		print e.message
+
 	Num=len(t1)
 	print t1
 	#计算订单总价格
@@ -121,7 +142,12 @@ def from_chart(request):
 	#添加收货地址
 	user_pk = getUserPk(request)
 	user_obj = UserInfo.objects.filter(pk=user_pk)[0]
-	address = DeliveryAddress.objects.filter(daOwner=user_obj)
+	try:
+		address = DeliveryAddress.objects.filter(daOwner=user_obj)
+		if len(address) == 0:
+			return redirect('/orderInfo/address/')
+	except Exception as e:
+		print e.message
 	context = {'key':mylist,'address':address[0],'Order':od,'num1':Num,'d':od.id}
 	return render(request,'TTSX/OrderInfo/buy.html',context)
 

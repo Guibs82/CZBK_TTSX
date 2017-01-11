@@ -8,21 +8,29 @@ from Tools.SessionTools import *
 def index(request):
     fruit = GoodsInfo.objects.filter(gType=1)
     seafood = GoodsInfo.objects.all().filter(gType=2)
-    vegetables = GoodsInfo.objects.all().filter(gType=4)
+    meat = GoodsInfo.objects.all().filter(gType=3)
+    eggs  =  GoodsInfo.objects.all().filter(gType=4)
+    vegetables = GoodsInfo.objects.all().filter(gType=5)
+    ice = GoodsInfo.objects.all().filter(gType=6)
     ftype = TypeInfo.objects.filter(pk=1)
     stype = TypeInfo.objects.filter(pk=2)
-    vtype = TypeInfo.objects.filter(pk=4)
+    mtype = TypeInfo.objects.filter(pk=3)
+    etype = TypeInfo.objects.filter(pk=4)
+    vtype = TypeInfo.objects.filter(pk=5)
+    itype = TypeInfo.objects.filter(pk=6)
     cart_count = getCartCount(request)
-    context = {'fruit':fruit[0:4],'fruit1':fruit[5:9],
-               'seafood':seafood[0:4],'seafood1':seafood[5:9],
-               'vegetables': vegetables[0:4], 'vegetables1': vegetables[5:9],
-               'ftype':ftype,'stype':stype,'vtype':vtype, 'cart_count':cart_count}
+    context = {'fruit':fruit[0:4],'meat':meat[0:4],
+               'seafood':seafood[0:4],'eggs':eggs[0:4],
+               'vegetables': vegetables[0:4], 'ice': ice[0:4],
+               'ftype':ftype,'stype':stype,'vtype':vtype,'mtype':mtype,'etype':etype,
+               'itype':itype,
+               'cart_count':cart_count}
     return render(request,'TTSX/index.html',context)
 
 
 def list(request,tid,pIndex):
     list = GoodsInfo.objects.all().filter(gType=tid)
-    list1 = list[1].gType.id
+    list1 = list[0].gType.id
     if pIndex == '':
         pIndex = '1'
 
@@ -45,7 +53,7 @@ def list(request,tid,pIndex):
 
 def list1(request,tid,pIndex):
     list = GoodsInfo.objects.all().filter(gType=tid).order_by('gPrice')
-    list1 = list[1].gType.id
+    list1 = list[0].gType.id
     if pIndex == '':
         pIndex = '1'
 
@@ -68,7 +76,7 @@ def list1(request,tid,pIndex):
 
 def list2(request,tid,pIndex):
     list = GoodsInfo.objects.all().filter(gType=tid).order_by('-gPrice')
-    list1 = list[1].gType.id
+    list1 = list[0].gType.id
     if pIndex == '':
         pIndex = '1'
 

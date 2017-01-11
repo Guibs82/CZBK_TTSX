@@ -139,11 +139,11 @@
 			<h3 class="fl" id="model03">猪牛羊肉</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				   {% for temp in fruit1 %}
+				   {% for temp in meat %}
 				<a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a>
                 {% endfor  %}
 			</div>
-             {% for temp in vtype %}
+             {% for temp in mtype %}
 			<a href="list/{{temp.id}}/" class="goods_more fr">查看更多 ></a>
             {% endfor %}
 		</div>
@@ -151,7 +151,7 @@
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src="/static/images/banner03.jpg"></div>
 			<ul class="goods_list fl">
-                {% for temp in fruit1 %}
+                {% for temp in meat %}
 				<li>
 					<h4><a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a></h4>
 					<a href="detail/?id={{temp.id}}"><img src={{ temp.gImage }}></a>
@@ -167,11 +167,11 @@
 			<h3 class="fl" id="model04">禽类蛋品</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-				   {% for temp in seafood1 %}
+				   {% for temp in eggs %}
 				<a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a>
                 {% endfor  %}
 			</div>
-             {%  for temp in ftype %}
+             {%  for temp in etype %}
 			<a href="list/{{temp.id}}/" class="goods_more fr">查看更多 ></a>
             {% endfor %}
 
@@ -180,7 +180,7 @@
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src="/static/images/banner04.jpg"></div>
 			<ul class="goods_list fl">
-                {% for temp in seafood1 %}
+                {% for temp in eggs %}
 				<li>
 					<h4><a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a></h4>
 					<a href="detail/?id={{temp.id}}"><img src={{ temp.gImage }}></a>
@@ -200,7 +200,7 @@
 				<a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a>
                     {% endfor  %}
 			</div>
-                    {% for temp in stype %}
+                    {% for temp in vtype %}
                 <a href="list/{{temp.id}}/" class="goods_more fr">查看更多 ></a>
                     {% endfor %}
 		</div>
@@ -224,11 +224,11 @@
 			<h3 class="fl" id="model06">速冻食品</h3>
 			<div class="subtitle fl">
 				<span>|</span>
-                    {% for temp in vegetables1 %}
+                    {% for temp in ice %}
 				<a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a>
                     {% endfor  %}
 			</div>
-                    {% for temp in vtype %}
+                    {% for temp in itype %}
 			    <a href="list/{{temp.id}}/" class="goods_more fr">查看更多 ></a>
                     {%  endfor %}
 		</div>
@@ -236,7 +236,7 @@
 		<div class="goods_con clearfix">
 			<div class="goods_banner fl"><img src="/static/images/banner06.jpg"></div>
 			<ul class="goods_list fl">
-					   {% for temp in vegetables1 %}
+					   {% for temp in ice %}
 				<li>
 					<h4><a href="detail/?id={{temp.id}}">{{ temp.gTitle }}</a></h4>
 					<a href="detail/?id={{temp.id}}"><img src={{ temp.gImage }}></a>

@@ -14,9 +14,13 @@ def getUserPk(request):
         print e.message
 
 def getCartCount(request):
-    user_pk = getUserPk(request)
-    from UserInfo.models import UserInfo
-    user_obj = UserInfo.objects.filter(pk=user_pk)[0]
-    from CartInfo.models import CartInfo
-    cartList = CartInfo.objects.filter(cUser=user_obj)
-    return len(cartList)
+    try:
+        user_pk = getUserPk(request)
+        from UserInfo.models import UserInfo
+        user_obj = UserInfo.objects.filter(pk=user_pk)[0]
+        from CartInfo.models import CartInfo
+        cartList = CartInfo.objects.filter(cUser=user_obj)
+        return len(cartList)
+    except Exception as e:
+        print e.message
+        return 0

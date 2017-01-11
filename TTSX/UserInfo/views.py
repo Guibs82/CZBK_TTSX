@@ -42,7 +42,7 @@ def doRegister(request):
     except Exception as e:
         print e.message
     from django.http import HttpResponse
-    return HttpResponse('Ok')
+    return render(request, 'TTSX/UserInfo/toIndex.html')
 
 def getLoginPage(request):
     """获取登录页面"""

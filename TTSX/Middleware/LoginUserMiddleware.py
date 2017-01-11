@@ -5,8 +5,9 @@ class LoginUserMiddleware(object):
     """中间件, 判定当前登入用户"""
     def process_request(self, request):
         """检测登入状态, 若未登入, 则跳转登录页面"""
-        if request.path not in ['/goodsInfo/index/', '/userInfo/loginPage/', '/userInfo/registerPage/', '/userInfo/doLogin/',
-                                '/userInfo/doRegister/']:
+        print request.path
+        if request.path in ['/orderInfo/address/', '/orderInfo/', '/orderInfo/userInfo/', '/cartInfo/cartPage/']:
+            print 'xxxxxxxxc'
             # 创建StrictRedis 对象
             rs = StrictRedis(host='localhost', port=6379, db=0)
             # 检测用户cookie 中是否有session_id
