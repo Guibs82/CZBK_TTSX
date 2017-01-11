@@ -13,6 +13,11 @@ class OrderInfo(models.Model):
     class Meta():
         """通过元类定义表名"""
         db_table = "OrderInfo"
+        ordering = ['-id']
+
+    def __unicode__(self):
+        """打印对象返回订单用户的名字"""
+        return self.oUser.uName
 
 class OrderDetailInfo(models.Model):
     """订单详细信息"""

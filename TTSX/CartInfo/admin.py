@@ -6,6 +6,5 @@ from CartInfo.models import CartInfo
 class CartInfoAdmin(admin.ModelAdmin):
     """定义购物车信息管理页面"""
     list_display = ('pk', 'cUser', 'cGoods', 'cCount')
-    search_fields = ['cUser']
 
 admin.site.register(CartInfo, CartInfoAdmin)

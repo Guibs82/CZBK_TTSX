@@ -10,6 +10,11 @@ class TypeInfo(models.Model):
         """通过元类定义表名"""
         db_table = "TypeInfo"
 
+    def __unicode__(self):
+        """打印对象时, 返回类别名称"""
+        return self.tTitle;
+
+
 class GoodsInfo(models.Model):
     """商品信息"""
     gTitle = models.CharField(max_length=20, db_column='gtitle')
@@ -21,3 +26,7 @@ class GoodsInfo(models.Model):
     class Meta():
         """通过元类定义表名"""
         db_table = "GoodsInfo"
+
+    def __unicode__(self):
+        """打印对象时, 返回类别名称"""
+        return self.gTitle;

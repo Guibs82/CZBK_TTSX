@@ -8,7 +8,10 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
-     {% block header %}{% endblock header %}
+    {% block title %}{% endblock title %}
+    {% block css %}{% endblock css %}
+    {% block js %} {% endblock js %}
+    {% block loginedName_js %}{% endblock loginedName_js %}
 </head>
 <body>
     {% block body_without_footer %}

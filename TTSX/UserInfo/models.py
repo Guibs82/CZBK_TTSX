@@ -13,6 +13,10 @@ class UserInfo(models.Model):
         """通过元类定义表名"""
         db_table = "UserInfo"
 
+    def __unicode__(self):
+        """打印对象时, 输出用户名字"""
+        return self.uName
+
 
 
 class DeliveryAddress(models.Model):

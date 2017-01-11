@@ -13,6 +13,5 @@ admin.site.register(UserInfo, UserInfoAdmin)
 class DeliveryAddressAdmin(admin.ModelAdmin):
     """定义收件人信息管理页面"""
     list_display = ('pk', 'daOwner', 'daName', 'daPhone', 'daAddress', 'daPostCode')
-    search_fields = ['daOwner']
 
 admin.site.register(DeliveryAddress, DeliveryAddressAdmin)

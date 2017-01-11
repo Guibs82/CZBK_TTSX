@@ -2,8 +2,11 @@
 {% comment %}
     用户登录页面
 {% endcomment %}
-{% block header %}
+{% block title %}
     <title>天天生鲜-登录</title>
+{% endblock title %}
+
+{% block js %}
     <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
     <script>
@@ -17,7 +20,7 @@
             }
         })
     </script>
-{% endblock header %}
+{% endblock js %}
 
 {% block body_without_footer %}
     {# 顶部Logo div开始 #}

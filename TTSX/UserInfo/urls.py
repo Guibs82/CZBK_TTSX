@@ -8,5 +8,4 @@ urlpatterns = [
 
     url(r'^loginPage/$', views.getLoginPage),
     url(r'^doLogin/$', views.doLogin),
-    url(r'^testCookies/$', views.setC),
 ]

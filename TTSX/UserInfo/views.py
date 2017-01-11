@@ -1,5 +1,5 @@
 #encoding:utf-8
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, loader
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from models import UserInfo
@@ -121,12 +121,12 @@ def doLogin(request):
 
             # To-Do: 设定主页地址
             # response = render_to_response('xxxxx.html')
-
-            # Test-Data:
-            response = HttpResponse('Ok')
+            t1 = loader.get_template('TTSX/UserInfo/toIndex.html')
+            response = HttpResponse(t1.render())
 
             # 覆盖cookies 中的session_id
             response.set_cookie('session_id', session_id, expires=60 * 60 * 3)
+            response.set_cookie('loginedName', loginUser[0].uName, expires=60 * 60 * 3)
             # 根据remember选项, 若勾选, 则将用户名存入cookie
             if len(remember):
                 # 用户名存入cookie
@@ -142,12 +142,6 @@ def doLogin(request):
         context = {}
         context['error_msg'] = '程序异常, 稍后再试'
         return render(request, 'TTSX/UserInfo/login.html', context=context)
-
-
-def setC(request):
-    response = HttpResponse('h')
-    response.set_cookie('username', 'aaaaa')
-    return response
 
 
 
