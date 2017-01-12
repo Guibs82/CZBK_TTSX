@@ -124,6 +124,8 @@ def doLogin(request):
             t1 = loader.get_template('TTSX/UserInfo/toIndex.html')
             response = HttpResponse(t1.render())
 
+            # Test
+
             # 覆盖cookies 中的session_id
             response.set_cookie('session_id', session_id, expires=60 * 60 * 3)
             response.set_cookie('loginedName', loginUser[0].uName, expires=60 * 60 * 3)

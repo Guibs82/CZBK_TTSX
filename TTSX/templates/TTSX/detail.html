@@ -7,10 +7,50 @@
 {% endcomment %}
 
 {% block js %}
-    	 <script src="/static/js/jquery-1.12.4.min.js"></script>
     <script>
+
+{#    getCookie#}
+
 {#        点击+　－　计算价格以及数量#}
             $(function () {
+
+{#                写入cookie 最近浏览#}
+                if ($.cookie('near_id') == null){
+                    alert('null');
+                    document.cookie='near_id='+{{ id }}+',;path='+'/';
+                } else {
+                    var near_id = $.cookie('near_id');
+                    near_id_arr = near_id.split(',');
+                    if ($(near_id_arr).length < 5) {
+                        // 追加
+                        if (near_id_arr[near_id_arr.length-1]==""){
+                            near_id_arr.pop();
+                        }
+                        alert(near_id_arr);
+                        var result = near_id_arr.indexOf("{{ id }}") < 0;
+                        alert(result);
+                        if (result) {
+                            alert('追加');
+                            near_id_arr.splice(0, 0, {{ id }});
+                            alert(near_id_arr);
+                            document.cookie='near_id='+near_id_arr.toString()+';path='+'/';
+                        }
+                    } else {
+                        if (near_id_arr[near_id_arr.length-1]==""){
+                            near_id_arr.pop();
+                        }
+                        // 替换
+                        var result = near_id_arr.indexOf("{{ id }}") < 0;
+                        if (result){
+                            alert('替换');
+                            near_id_arr.splice(0, 0, {{ id }});
+                            near_id_arr.pop();
+                            document.cookie='near_id='+near_id_arr.toString()+';path='+'/';
+                        }
+                    }
+                }
+
+
 {#   默认价格为单价         #}
             $('.total').children().html($('.show_pirze').children().html()+'元')
 {#加号点击事件#}

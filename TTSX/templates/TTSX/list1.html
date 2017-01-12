@@ -8,7 +8,6 @@
 
 
 {% block js %}
-        <script src="/static/js/jquery-1.12.4.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $('.add_goods').click(function(){
@@ -117,16 +116,13 @@
 			<div class="new_goods">
 				<h3>新品推荐</h3>
 				<ul>
-					<li>
-						<a href="#"><img src="/static/images/goods/goods001.jpg"></a>
-						<h4><a href="#">进口柠檬</a></h4>
-						<div class="prize">￥3.90</div>
-					</li>
-					<li>
-						<a href="#"><img src="/static/images/goods/goods002.jpg"></a>
-						<h4><a href="#">玫瑰香葡萄</a></h4>
-						<div class="prize">￥16.80</div>
-					</li>
+                    {% for temp in list_1 %}
+                         <li>
+                          <a href="/goodsInfo/detail/?id={{temp.id}}"><img src={{ temp.gImage }}></a >
+                          <h4><a href="/goodsInfo/detail/?id={{temp.id}}">{{ temp.gTitle }}</a ></h4>
+                          <div class="prize">{{ temp.gPrice }}/500g</div>
+                         </li>
+                    {% endfor %}
 				</ul>
 			</div>
 		</div>

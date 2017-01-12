@@ -201,6 +201,7 @@ def userInfo(request):
 	#用户信息页面
 	pageName = '用户中心'
 	context={'pageName':pageName}
+	request.COOKIES['near_id']
 	return render(request,'TTSX/OrderInfo/userInfo.html',context)
 
 def userDetailInfo(request):

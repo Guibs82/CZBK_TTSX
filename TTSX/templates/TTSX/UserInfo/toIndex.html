@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <script src="/static/js/jquery-1.12.4.min.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
     <script>
-        setTimeout(window.location.href='/goodsInfo/',1);
+        var aim_url = $.cookie('aim_url');
+        alert(aim_url);
+        if (aim_url != ""){
+            setTimeout(window.location.href=aim_url,1);
+            $.cookie('aim_url', "");
+        } else {
+            setTimeout(window.location.href='/goodsInfo/',1);
+        }
+
     </script>
 </head>
 <body>

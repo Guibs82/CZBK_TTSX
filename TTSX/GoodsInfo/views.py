@@ -29,8 +29,17 @@ def index(request):
 
 
 def list(request,tid,pIndex):
+
     list = GoodsInfo.objects.all().filter(gType=tid)
     list1 = list[0].gType.id
+
+    len1 = len(list)
+    if len1 > 2:
+        len2 = len1 - 2
+        list_1 = list[len2:]
+    else:
+        list_1 = list
+
     if pIndex == '':
         pIndex = '1'
 
@@ -46,7 +55,7 @@ def list(request,tid,pIndex):
     if page.has_next():
         pNext = pIndex + 1
     cart_count = getCartCount(request)
-    context = {'list': list,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
+    context = {'list': list,'list_1':list_1,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
                'list1':list1, 'cart_count':cart_count}
     return render(request,'TTSX/list.html',context)
 
@@ -54,6 +63,13 @@ def list(request,tid,pIndex):
 def list1(request,tid,pIndex):
     list = GoodsInfo.objects.all().filter(gType=tid).order_by('gPrice')
     list1 = list[0].gType.id
+    len1 = len(list)
+    if len1 > 2 :
+        len2 = len1 - 2
+        list_1 = list[len2:]
+    else:
+        list_1 = list
+
     if pIndex == '':
         pIndex = '1'
 
@@ -69,7 +85,7 @@ def list1(request,tid,pIndex):
     if page.has_next():
         pNext = pIndex + 1
     cart_count = getCartCount(request)
-    context = {'list': list,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
+    context = {'list': list,'list_1':list_1,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
                'list1':list1, 'cart_count': cart_count}
     return render(request,'TTSX/list1.html',context)
 
@@ -77,6 +93,13 @@ def list1(request,tid,pIndex):
 def list2(request,tid,pIndex):
     list = GoodsInfo.objects.all().filter(gType=tid).order_by('-gPrice')
     list1 = list[0].gType.id
+    len1 = len(list)
+    if len1 > 2:
+        len2 = len1 - 2
+        list_1 = list[len2:]
+    else:
+        list_1 = list
+
     if pIndex == '':
         pIndex = '1'
 
@@ -92,7 +115,7 @@ def list2(request,tid,pIndex):
     if page.has_next():
         pNext = pIndex + 1
     cart_count = getCartCount(request)
-    context = {'list': list,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
+    context = {'list': list,'list_1':list_1,'page':page,'page_num':page_num,'pPrev':pPrev,'pNext':pNext,'pIndex':pIndex,'pcount':pcount,
                'list1':list1, 'cart_count':cart_count}
     return render(request,'TTSX/list2.html',context)
 
@@ -103,8 +126,17 @@ def detail(request):
     price = goods[0].gPrice
     goods_t = goods[0].gType.id
     goods_1 = GoodsInfo.objects.filter(gType=goods_t)
+    len1 = len(goods_1)
+    print len1
+    if len1 > 2:
+        len2 = len1 - 2
+        print len2
+        goods_1 = goods_1[len2:]
+    else:
+        goods_1 = goods_1
     user_pk = getUserPk(request)
     cart_count = getCartCount(request)
-    context = {'goods':goods,'goods_1':goods_1[7:9],'id':id,'user_pk':user_pk,'price':price, 'cart_count':cart_count}
+    context = {'goods':goods,'goods_1':goods_1,'id':id,'user_pk':user_pk,'price':price, 'cart_count':cart_count}
     return render(request,'TTSX/detail.html',context)
+
 
