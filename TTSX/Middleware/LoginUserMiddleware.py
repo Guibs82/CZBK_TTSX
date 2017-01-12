@@ -22,9 +22,9 @@ class LoginUserMiddleware(object):
                 response = HttpResponse(t1.render())
                 aim_url = request.get_full_path()
                 aim_url = aim_url.encode('utf-8')
-                print "+++++"
+                print '+++++'
                 print aim_url
                 print type(aim_url)
-                print "+++++"
-                response.set_cookie('aim_url', request.get_full_path())
+                print '+++++'
+                response.set_cookie('aim_url', aim_url)
                 return response

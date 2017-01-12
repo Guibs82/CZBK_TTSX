@@ -1,4 +1,7 @@
 #goodsinfo_text.txt，这里列出了要对哪些列的内容进行检索
 {{ object.gTitle }}
-{{ object.isDeleted }}
+{{ object.gType }}
+{{ object.gImage }}
+{{ object.gPrice }}
 {{ object.gDesc }}
+{{ object.isDeleted }}

@@ -200,8 +200,18 @@ def from_usercenter(request):
 def userInfo(request):
 	#用户信息页面
 	pageName = '用户中心'
-	context={'pageName':pageName}
-	request.COOKIES['near_id']
+	cookie = request.COOKIES
+	# 获取cookie中最近浏览的商品，渲染到模板
+	if cookie.has_key('near_id'):
+		near_id = cookie['near_id']
+		mylist = near_id.split(',')
+		obj_list = []
+		for temp in mylist:
+			obj = GoodsInfo.objects.filter(id=int(temp))[0]
+			obj_list.append(obj)
+		context = {'pageName': pageName, 'obj_list': obj_list}
+	else:
+		context = {'pageName': pageName}
 	return render(request,'TTSX/OrderInfo/userInfo.html',context)
 
 def userDetailInfo(request):

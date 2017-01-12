@@ -6,6 +6,55 @@
         右边购物车
 {% endcomment %}
 
+{% block js %}
+    <script>
+        $(function () {
+{#            Ajax获取购物车数量并更新页面显示#}
+                $.post(
+                    '/cartInfo/getCartCount/',
+                    function (list) {
+                        $('#show_count').html(list.cart_count);
+                    }
+                );
+
+{#                添加购物车动画#}
+            $('.add_goods').click(function(){
+                var count = 1;
+                var href = $(this).parent().prev().prev().attr('href');
+                var ind = href.lastIndexOf('=');
+                var id = href.slice(ind+1);
+                $.post('/cartInfo/addCartInfo/',
+                         {
+                          'good_pk':id,
+                          'user_pk':"",
+                          'count':count,
+                         },
+{#                         判断是否成功做相应事情#}
+                    function(list){
+                        if(list.addResult == '1'){
+                            var $add_x = $('#add_cart').offset().top;
+                            var $add_y = $('#add_cart').offset().left;
+
+                            var $to_x = $('#show_count').offset().top;
+                            var $to_y = $('#show_count').offset().left;
+
+                            $(".add_jump").css({'left':$add_y+80,'top':$add_x+10,'display':'block'})
+                            $(".add_jump").stop().animate({
+                                'left': $to_y+7,
+                                'top': $to_x+7},
+                                "fast", function() {
+                                    $(".add_jump").fadeOut('fast',function(){
+                                        $('#show_count').html(list.cart_count);
+                                    });
+
+                                });
+                        };
+                    });
+		    });
+        });
+	</script>
+{% endblock js %}
+
 
 {% block content_without_lsc %}
     {# 此处填写具体功能的页面 #}
@@ -39,27 +88,10 @@
 
 	<div class="breadcrumb">
 		<a href="/goodsInfo/">全部分类</a>
-		<span>></span>
-		<a href="#">新鲜水果</a>
 	</div>
 
 	<div class="main_wrap clearfix">
     <div class="l_wrap fl clearfix">
-			<div class="new_goods">
-				<h3>新品推荐</h3>
-				<ul>
-					<li>
-						<a href="#"><img src="/static/images/goods/goods001.jpg"></a>
-						<h4><a href="#">进口柠檬</a></h4>
-						<div class="prize">￥3.90</div>
-					</li>
-					<li>
-						<a href="#"><img src="/static/images/goods/goods002.jpg"></a>
-						<h4><a href="#">玫瑰香葡萄</a></h4>
-						<div class="prize">￥16.80</div>
-					</li>
-				</ul>
-			</div>
 		</div>
 		<div class="r_wrap fr clearfix">
 
@@ -80,27 +112,16 @@
 				</li>
 
                 {% empty %}
-            <h3>啥也没找到</h3>
+                    <h3>尴尬了, 这货我还没有啊, 换个东西试试呗 O(∩_∩)O</h3>
                 {% endfor %}
                 {% endif %}
 			</ul>
 
-            	<div class="pagenation">
-                <a href="#">首页</a>
-				<a href="#">上一页</a>
-                <a href="#" class="active">1</a>
-                <a href="#">下一页</a>
-                <a href="#">末页</a>
-			</div>
-
-
-
-
 		</div>
 	</div>
 
+    <div class="add_jump"></div>
 
-    <script src="/static/js/jquery-1.12.4.min.js"></script>
  {% endblock content_without_lsc %}
 
 

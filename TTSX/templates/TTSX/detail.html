@@ -16,7 +16,7 @@
 
 {#                写入cookie 最近浏览#}
                 if ($.cookie('near_id') == null){
-                    alert('null');
+{#                    alert('null');#}
                     document.cookie='near_id='+{{ id }}+',;path='+'/';
                 } else {
                     var near_id = $.cookie('near_id');
@@ -26,13 +26,13 @@
                         if (near_id_arr[near_id_arr.length-1]==""){
                             near_id_arr.pop();
                         }
-                        alert(near_id_arr);
+{#                        alert(near_id_arr);#}
                         var result = near_id_arr.indexOf("{{ id }}") < 0;
-                        alert(result);
+{#                        alert(result);#}
                         if (result) {
-                            alert('追加');
+{#                            alert('追加');#}
                             near_id_arr.splice(0, 0, {{ id }});
-                            alert(near_id_arr);
+{#                            alert(near_id_arr);#}
                             document.cookie='near_id='+near_id_arr.toString()+';path='+'/';
                         }
                     } else {
@@ -42,7 +42,7 @@
                         // 替换
                         var result = near_id_arr.indexOf("{{ id }}") < 0;
                         if (result){
-                            alert('替换');
+{#                            alert('替换');#}
                             near_id_arr.splice(0, 0, {{ id }});
                             near_id_arr.pop();
                             document.cookie='near_id='+near_id_arr.toString()+';path='+'/';

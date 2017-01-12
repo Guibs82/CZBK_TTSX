@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^changeCount/$', views.changeCount),
     url(r'^delCartInfo/$', views.delCartInfo),
     url(r'^addCartInfo/$', views.addCartInfo),
+    url(r'^getCartCount/$', views.getCartCount),
     # url(r'^testPage/$', views.getTestPage),
 ]
 

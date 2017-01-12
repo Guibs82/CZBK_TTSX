@@ -98,6 +98,15 @@ def addCartInfo(request):
     from django.http import JsonResponse
     return JsonResponse({'addResult': addResult, 'cart_count': cart_count})
 
+@csrf_exempt
+def getCartCount(request):
+    """获取购物车数量"""
+    user_pk = getUserPk(request)
+    cart_count = len(CartInfo.objects.filter(cUser=UserInfo.objects.filter(pk=user_pk)[0]))
+
+    from django.http import JsonResponse
+    return JsonResponse({'cart_count': cart_count})
+
 
 # @csrf_exempt
 # def getTestPage(request):

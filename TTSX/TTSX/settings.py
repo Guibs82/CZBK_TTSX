@@ -1,3 +1,4 @@
+#encoding:utf-8
 """
 Django settings for TTSX project.
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = (
     'UserInfo',
     'CartInfo',
     'OrderInfo',
+    'haystack',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -112,3 +114,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+# 配置搜索引擎
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+# 自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

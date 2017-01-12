@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="/static/js/jquery-1.12.4.min.js"></script>
-    <script src="/static/js/jquery.cookie.js"></script>
-    <script>
-        var aim_url = $.cookie('aim_url');
-        alert(aim_url);
-        if (aim_url != ""){
+    <script type="text/javascript" src="/static/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            cookies = document.cookie.split(";");
+            // alert(cookies);
+            var aim_url='/goodsInfo/';
+            for(index in cookies){
+                if (cookies[index].substring(0,8)==' aim_url') {
+                    var aim_url = cookies[index].split("\"")[1];
+                }
+            }
+            alert(aim_url);
             setTimeout(window.location.href=aim_url,1);
-            $.cookie('aim_url', "");
-        } else {
-            setTimeout(window.location.href='/goodsInfo/',1);
         }
-
     </script>
 </head>
 <body>
