@@ -14,6 +14,7 @@ def getUserPk(request):
         print e.message
 
 def getCartCount(request):
+    """获取购物车商品数量"""
     try:
         user_pk = getUserPk(request)
         from UserInfo.models import UserInfo

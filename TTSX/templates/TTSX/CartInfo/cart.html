@@ -230,32 +230,38 @@
 {#                        'goodPriceList': goodPriceList,#}
 {#                    }#}
 {#                );#}
-                var paramStr = '?'
+                var paramStr = '?';
                 $(checkedList).each(function (index) {
                     // cart_pk
                     paramStr += 't1';
-                    paramStr += '='
+                    paramStr += '=';
                     paramStr += $(this).attr('name');
-                    paramStr += '&'
+                    paramStr += '&';
                     // good_price
                     paramStr += 'p1';
-                    paramStr += '='
+                    paramStr += '=';
                     var priceStr = parseFloat($(this).parent().next().next().next().next().html());
                     paramStr += priceStr;
-                    paramStr += '&'
+                    paramStr += '&';
                     // good_count
                     paramStr += 'c1';
-                    paramStr += '='
+                    paramStr += '=';
                     paramStr += $(this).parent().next().next().next().next().next().find('input').val();
-                    paramStr += '&'
+                    paramStr += '&';
                 });
                 paramStr = paramStr.substring(0, paramStr.length-1);
-                $(this).attr('href', '/orderInfo/from_cart/'+paramStr);
+                if (paramStr!=""){
+                    url = '/orderInfo/from_cart/'+paramStr;
+                } else {
+                    url = '#';
+                }
+                $(this).attr('href', url);
 
 
                 {# Ajax 传递 #}
                 {# 商品pk 商品count 商品price #}
             });
+
         });
     </script>
 {% endblock js %}

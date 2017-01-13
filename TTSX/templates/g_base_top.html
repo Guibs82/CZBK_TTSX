@@ -9,7 +9,7 @@
     <script type="text/javascript" src="/static/js/jquery.cookie.js"></script>
     <script>
         $(function () {
-            {# 看cookies 中是否有用户名, 有就填写 #}
+            {# 看cookies 中是否有用户名, 有就填写 开始 #}
             //var username = $.cookie('username');
             username = $.cookie('loginedName');
             if (username){
@@ -22,7 +22,9 @@
                 $('.login_info').hide();
                 $('.login_btn').show();
             }
+            {# 看cookies 中是否有用户名, 有就填写 结束 #}
 
+            {# 注销登录 开始 #}
             $('.login_info span').click(function () {
                 // 注销-- 删除cookies
                 $.cookie('session_id', "", {path:"/"});
@@ -32,6 +34,7 @@
                 $('.login_info').hide();
                 $('.login_btn').show();
             });
+            {# 注销登录 开始 #}
         })
     </script>
 {% endblock loginedName_js %}

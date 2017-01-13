@@ -21,6 +21,11 @@
                    'good_pk':id,
                    'user_pk':"",
                    'count':1,
+                },
+                function (list) {
+                    if (list.addResult==1) {
+                        alert('已添加至购物车~');
+                    }
                 }
             );
         });

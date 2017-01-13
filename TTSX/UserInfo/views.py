@@ -80,6 +80,7 @@ def doLogin(request):
             if session_id == "":
                 # cookies 中不存在session_id
                 # 生成redis 中不存在的session_id, 作为本次会话在redis 中的的id
+                # 随机生成24位的唯一标识
                 session_id = filter(lambda x: not rs.exists(x), sha1(os.urandom(24)).hexdigest())
                 # 本次session中要保存的数据字典
                 session_msg = {}
